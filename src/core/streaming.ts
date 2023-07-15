@@ -12,47 +12,59 @@ export const streaming = async () => {
       // Get the latest block
       const block: any = await _wss_provider.getBlock(blockNumber);
 
-      if (block) {
-        // Create an empty array to store transactions
-        const transactions = [];
+      if (!block) {
+        return new Error("Block not found");
+      }
+      // Create an empty array to store transactions
+      const transactions = [];
 
-        for (const txHash of block.transactions) {
-          // Get the transaction details
-          const txReceipt: any = await _wss_provider.getTransaction(txHash);
+      for (const txHash of block.transactions) {
+        // Get the transaction details
+        const txReceipt: any = await _wss_provider.getTransaction(txHash);
 
-          if (!txReceipt) {
-            console.log(`Transaction not found: ${txHash}`);
-            continue;
-          }
-
-          // Check if gasPrice is present
-          if (!txReceipt.gasPrice) {
-            console.log(`Gas price not found for transaction: ${txHash}`);
-            continue;
-          }
-
-          // Get the transaction receipt
-          const txReceiptWithGas = await _wss_provider.getTransactionReceipt(txHash);
-
-          if (!txReceiptWithGas || !txReceiptWithGas.gasUsed) {
-            console.log(`Gas used not found for transaction: ${txHash}`);
-            continue;
-          }
-
-          // Calculate the gas fee
-          const gasPrice: any = ethers.utils.formatUnits(txReceipt.gasPrice, "gwei");
-          const gasUsed: any = txReceiptWithGas.gasUsed;
-          const gasFee = ethers.utils.formatEther(gasPrice * block.gasLimit);
-
-          // Push the transaction details with the gas fee to the transactions array
-          transactions.push({
-            hash: txReceipt.hash,
-            gasFee: parseFloat(gasFee),
-          });
+        if (!txReceipt) {
+          console.log(`Transaction not found: ${txHash}`);
+          continue;
         }
 
-        console.log("Transactions: ", transactions);
+        // Check if gasPrice is present
+        if (!txReceipt.gasPrice) {
+          console.log(`Gas price not found for transaction: ${txHash}`);
+          return;
+        }
+
+        // Get the transaction receipt
+        const txReceiptWithGas = await _wss_provider.getTransactionReceipt(
+          txHash
+        );
+
+        if (!txReceiptWithGas || !txReceiptWithGas.gasUsed) {
+          console.log(`Gas used not found for transaction: ${txHash}`);
+          return;
+        }
+
+        // Calculate the gas fee
+        const gasPrice: any = ethers.utils.formatUnits(
+          txReceipt.gasPrice,
+          "gwei"
+        );
+
+        console.log("Gas price: ", gasPrice);
+        const gasUsed: any = txReceiptWithGas.gasUsed;
+
+        console.log("Gas used: ", gasUsed);
+        const gasFee = ethers.utils.formatEther(gasPrice.mul(block.gasLimit));
+         console.log("Gas fee: ", gasFee)
+
+        // Push the transaction details with the gas fee to the transactions array
+        transactions.push({
+          hash: txReceipt.hash,
+          gasFee: parseFloat(gasFee),
+        });
       }
+
+      console.log("Transactions: ", transactions);
+      //}
     });
   } catch (error) {
     console.log("Error in streaming: ", error);
