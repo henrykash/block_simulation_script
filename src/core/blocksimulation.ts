@@ -1,4 +1,4 @@
-import { BigNumber, ethers } from "ethers";
+import {  ethers } from "ethers";
 import { config } from "../config/config";
 
 // Create an instance of the provider

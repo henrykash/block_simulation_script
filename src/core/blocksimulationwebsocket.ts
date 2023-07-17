@@ -3,10 +3,11 @@ import { config } from "../config/config";
 import { PANCAKESWAP_ABI } from "../constants/abi";
 
 //create an interface of the pancake swap router abi
-let _pancakeSwap = new ethers.utils.Interface(PANCAKESWAP_ABI);
+const _pancakeSwap = new ethers.utils.Interface(PANCAKESWAP_ABI);
+const _wss_provider = new ethers.providers.WebSocketProvider(config.WSS_URL);
+
 
 export const streaming = async () => {
-  const _wss_provider = new ethers.providers.WebSocketProvider(config.WSS_URL);
 
   try {
     // Subscribe to the newBlockHeaders event
@@ -60,7 +61,7 @@ export const streaming = async () => {
   }
 };
 
-export const decodeData = async(receipt:   providers.TransactionResponse) => {
+export const decodeData = async(receipt: providers.TransactionResponse) => {
 
   //implemenation of transaction processing logic goes here
   let {
