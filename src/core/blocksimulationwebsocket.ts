@@ -49,7 +49,7 @@ export const streaming = async () => {
 
        //sort the transactions in the block in descending order of gas price
         const sortedTransactions = transactions.sort((a, b) => b.gasPrice - a.gasPrice);
-        console.log("Here are the sorted transactions: ", sortedTransactions)
+       // console.log("Here are the sorted transactions: ", sortedTransactions)
       
     });
   } catch (error) {
