@@ -1,7 +1,7 @@
 import { BigNumber, ethers } from "ethers";
 import { config } from "../config/config";
 
-// Create an instance of the Ethereum provider
+// Create an instance of the provider
 const _provider = new ethers.providers.JsonRpcProvider(config.JSON_RPC_URL);
 
 export const blockSimulation = async () => {
