@@ -1,12 +1,12 @@
 import { blockSimulation } from "./core/blocksimulation";
-import { streaming } from "./core/streaming";
+import { streaming } from "./core/blocksimulationwebsocket";
 
 const main = async () => {
 
     //call the blockSimulation function
-    //await blockSimulation();
+    await blockSimulation();
 
-    await streaming();
+    //await streaming();
 };
 
 main();
