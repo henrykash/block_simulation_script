@@ -1,5 +1,5 @@
 # block_simulation_script
-- Have you ever wondered how transactions are ordered in a block when miners gets them from the mempool ? Dont worry I was also curious and this script helps us do some digging. This project is for learning purposes especially if you are exploring MEV and transactions orderig. The project has to files:
+- Have you ever wondered how transactions are ordered in a block when miners gets them from the mempool ? Dont worry I was also curious and this script helps us do some digging. This project is for learning purposes especially if you are exploring MEV and transactions ordering. The project has to files:
    1. Getting a new `block` through a `JSON_RPC provider`
  
    2. Getting a block by listening to new block using `websockest provider`...
